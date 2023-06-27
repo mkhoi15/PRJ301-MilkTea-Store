@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.naming.NamingException;
+import sample.shopping.Tea;
 import sample.utils.DBUtils;
 import sample.user.UserDTO;
 
@@ -26,7 +28,8 @@ public class UserDAO {
     private static String UPDATE = "UPDATE tblUsers SET fullName=?, roleID=? WHERE userID=?";
     private static String CHECK_DUPLICATE = "SELECT fullName FROM tblUsers WHERE userID = ?";
     private static String iNSERT = "INSERT INTO tblUsers(userID, fullName, roleID, password) VALUES(?,?,?,?)";
-
+    
+    
     public UserDTO checkLogin(String userID, String password) throws SQLException {
         UserDTO user = null;
         Connection conn = null;
@@ -211,7 +214,7 @@ public class UserDAO {
         return checkUpdate;
     }
     
-    public boolean insert2(UserDTO user) throws SQLException, ClassNotFoundException {
+    public boolean insert2(UserDTO user) throws SQLException, ClassNotFoundException, NamingException {
         boolean checkUpdate = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -236,5 +239,7 @@ public class UserDAO {
         }
         return checkUpdate;
     }
-
+    
+    
+    
 }

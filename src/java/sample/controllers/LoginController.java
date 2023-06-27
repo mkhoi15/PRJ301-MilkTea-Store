@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sample.servlets;
+package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,36 +20,45 @@ import sample.user.UserDTO;
  *
  * @author ADMIN
  */
-@WebServlet(name = "UpdateController", urlPatterns = {"/UpdateController"})
-public class UpdateController extends HttpServlet {
+@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
+public class LoginController extends HttpServlet {
 
-    private static final String ERROR = "SearchController";
-    private static final String SUCCESS = "SearchController";
+    private static final String AD = "AD";
+    private static final String US = "US";
+    private static final String ADMIN_PAGE = "admin.jsp";
+    private static final String US_PAGE = "usPage.jsp";
+    private static final String LOGIN_PAGE = "login.jsp";
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try {
+        String url = LOGIN_PAGE;
+        try { 
             String userID = request.getParameter("userID");
-            String fullName = request.getParameter("fullName");
-            String roleID = request.getParameter("roleID");
+            String password = request.getParameter("password");
             UserDAO dao = new UserDAO();
-            UserDTO user = new UserDTO(userID, fullName, roleID, "");
-            boolean checkUpdate = dao.update(user);
-            if (checkUpdate) {
+            UserDTO loginUser = dao.checkLogin(userID,password);
+            if(loginUser == null){
+                request.setAttribute("ERROR", "Incorrect UserID or password!");
+            } else {
                 HttpSession session = request.getSession();
-                UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-                if (loginUser.getUserID().equals(userID)) {
-                    session.setAttribute("LOGIN_USER", user);  
-                } 
+                session.setAttribute("LOGIN_USER",loginUser);
+                String roleID = loginUser.getRoleID();
+                if(AD.equals(roleID)){
+                    url = ADMIN_PAGE;
+                } else if (US.equals(roleID)){
+                    url = US_PAGE;
+                } else {
+                    request.setAttribute("ERROR", "Your role is not supported yet");
+                }
             }
-             url = SUCCESS;
         } catch (Exception e) {
-            log("Error at UpdateController " + e.toString());
+            log("Error at LoginController" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

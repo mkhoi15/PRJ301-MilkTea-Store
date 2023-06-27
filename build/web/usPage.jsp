@@ -14,16 +14,19 @@
     </head>
     <body>
         <h1>User Information</h1>
-        <%
-            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-            if (loginUser == null || !"US".equals(loginUser.getRoleID())) {
-                    response.sendRedirect("login.html");
-                    return;
-                }
-        %>
-        UserID: <%= loginUser.getUserID() %><br/>
-        Password: <%= loginUser.getPassword() %><br/>
-        RoleID: <%= loginUser.getRoleID() %><br/>
-        FullName: <%= loginUser.getFullName() %>
+      
+        <c:if test="${sessionScope.LOGIN_USER == null || sessionScope.LOGIN_USER.roleID ne 'US'}">
+            <c:redirect url="login.html"></c:redirect>
+        </c:if>
+        
+        UserID: ${sessionScope.LOGIN_USER.userID}<br/>
+        Password: ${sessionScope.LOGIN_USER.password}<br/>
+        RoleID: ${sessionScope.LOGIN_USER.roleID}<br/>
+        FullName: ${sessionScope.LOGIN_USER.fullName}
+        
+          <!--Home Menu--> 
+        
+        <!--Home Slider-->
+        
     </body>
 </html>

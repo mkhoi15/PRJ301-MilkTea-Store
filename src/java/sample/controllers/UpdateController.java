@@ -1,5 +1,9 @@
-
-package sample.servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,67 +12,44 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import sample.user.UserDAO;
 import sample.user.UserDTO;
-import sample.user.UserError;
 
+/**
+ *
+ * @author ADMIN
+ */
+@WebServlet(name = "UpdateController", urlPatterns = {"/UpdateController"})
+public class UpdateController extends HttpServlet {
 
-@WebServlet(name = "CreateController", urlPatterns = {"/CreateController"})
-public class CreateController extends HttpServlet {
+    private static final String ERROR = "SearchController";
+    private static final String SUCCESS = "SearchController";
 
-    private static final String ERROR = "create.jsp";
-    private static final String SUCCESS = "login.jsp";
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        UserError userError = new UserError();
         try {
             String userID = request.getParameter("userID");
             String fullName = request.getParameter("fullName");
             String roleID = request.getParameter("roleID");
-            String password = request.getParameter("password");
-            String confirm = request.getParameter("confirm");
             UserDAO dao = new UserDAO();
-            boolean checkValidation = true;
-            if(userID.length() > 10 || userID.length() < 2 ){
-                userError.setUserIDError("User ID must be in [2,10]");
-                checkValidation = false;
+            UserDTO user = new UserDTO(userID, fullName, roleID, "");
+            boolean checkUpdate = dao.update(user);
+            if (checkUpdate) {
+                HttpSession session = request.getSession();
+                UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                if (loginUser.getUserID().equals(userID)) {
+                    session.setAttribute("LOGIN_USER", user);  
+                } 
             }
-            boolean checkDuplicate = dao.checkDuplicate(userID);
-            if(checkDuplicate){
-                userError.setUserIDError("Duplicate User ID, User ID have already exsited");
-                checkValidation = false;
-            }
-            if(fullName.length() < 5 || fullName.length() > 20){
-                userError.setFullNameError("Full Name length must be [5,20]");
-                checkValidation = false;
-            }
-            if(!password.equals(confirm)){
-                userError.setConfirmError("Confirm password is not match");
-                checkValidation = false;
-            }
-            if (checkValidation) {
-                UserDTO user = new UserDTO(userID, fullName, roleID, password);
-//                boolean checkInsert = dao.insert(user);
-                boolean checkInsert2 = dao.insert(user);
-                if (checkInsert2) {
-                    url = SUCCESS;
-                } else {
-                    request.setAttribute("ERROR", "Unknow Error! ");
-                }
-            }
-            else {
-                request.setAttribute("USER_ERROR", userError);
-            }
+             url = SUCCESS;
         } catch (Exception e) {
-            log("Error at CreateController: "+e.toString());
-            
+            log("Error at UpdateController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

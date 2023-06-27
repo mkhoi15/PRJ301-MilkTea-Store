@@ -3,47 +3,57 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sample.servlets;
+package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.user.UserDAO;
-import sample.user.UserDTO;
+import javax.servlet.http.HttpSession;
+import sample.shopping.Cart;
+import sample.shopping.Tea;
 
-/**
- *
- * @author ADMIN
- */
-@WebServlet(name = "SearchController", urlPatterns = {"/SearchController"})
-public class SearchController extends HttpServlet {
 
-    private static final String ERROR = "admin.jsp";
-    private static final String SUCCESS = "admin.jsp";
+@WebServlet(name = "AddController", urlPatterns = {"/AddController"})
+public class AddController extends HttpServlet {
 
+    
+    private static final String ERROR = "shopping.jsp";
+    private static final String SUCCESS = "shopping.jsp";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+       
         String url = ERROR;
         try {
-            String search = request.getParameter("search");
-            UserDAO dao = new UserDAO();
-            List<UserDTO> listUser = dao.getListUser(search);
-            if(listUser.size() > 0){
-                request.setAttribute("LIST_USER", listUser);
-                url = SUCCESS;
+            String strTea = request.getParameter("cmbTea");
+            String [] tmp = strTea.split("-");
+            String id = tmp[0];
+            String name = tmp[1];
+            double price = Double.parseDouble(tmp[2]);
+            int quantity = Integer.parseInt(request.getParameter("cmbQuantity"));
+            HttpSession session = request.getSession();
+            Cart cart = (Cart) session.getAttribute("CART");
+            if(cart == null ){
+                cart = new Cart();
             }
+            Tea tea = new Tea(id, name, price, quantity,"","",0);
+            boolean check = cart.add(tea);
+            if (check) {
+                session.setAttribute("CART", cart);
+                request.setAttribute("MESSAGE", "Added: "+name+" - "+quantity+ " Sucess!");
+            }
+            url = SUCCESS;
         } catch (Exception e) {
-            log("Error at SearchController: "+e.toString());
+            log("Error at AddController: "+e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

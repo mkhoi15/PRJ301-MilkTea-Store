@@ -132,6 +132,36 @@
             margin-top: 10px;
             font-size: 13px;
         }
+        
+        .user-logout{
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 40px
+        }
 
-       
+        .user-logout > p{
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        
+        .user{
+            margin: 0 16px;  
+            position: relative;
+        }
+        
+        .user:after{
+            content: "";
+            position: absolute;
+            content: "";
+            display: block;
+            border: 1px solid #ccc;
+            height: 16px;
+            right: -9px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .logout{
+            text-decoration: none;
+        }
    

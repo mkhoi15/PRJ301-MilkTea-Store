@@ -32,18 +32,6 @@
     <body>
 
 
-        <%
-            UserError userError = (UserError) request.getAttribute("USER_ERROR");
-            if (userError == null) {
-                userError = new UserError();
-            }
-            String error = (String) request.getAttribute("ERROR");
-            if (error == null) {
-                error = "";
-            }
-        %>
-
-
         <section class="vh-90 " >
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -60,7 +48,7 @@
                                         
                                         <div class="form-outline">
                                             <input type="text" id="formUserID" class="form-control" placeholder="User ID" name="userID" required=""/>
-                                             <h5 style="color: red">  <%= userError.getUserIDError()%> <h5>
+                                             <h5 style="color: red">  ${requestScope.USER_ERROR.userIDError}  <h5>
                                             <label class="form-label" for="formUserID"></label>
                                         </div>
                                         
@@ -73,7 +61,7 @@
                                         <div class="form-outline ">
                                             <input type="text" class="form-control" id="formName" placeholder="Full Name" name="fullName" required=""/>
                                             <label for="formName" class="form-label"></label>
-                                            <h5 style="color: red"> <%= userError.getFullNameError() %> <h5>    
+                                            <h5 style="color: red">  ${requestScope.USER_ERROR.fullNameError} <h5>    
                                         </div>
 
                                     </div>
@@ -97,15 +85,16 @@
                                     <div class="form-outline mb-4">
                                         <input type="password" id="formConfirm" class="form-control" placeholder="Confirm" name="confirm" required=""/>
                                         <label class="form-label" for="formConfirm"></label>
-                                        <h5 style="color: red"> <%= userError.getConfirmError()%> <h5>
+                                        <h5 style="color: red"> ${requestScope.USER_ERROR.confirmError}<h5>
                                     </div>
 
 
+                                    
+                                    <input type="submit" name="action" value="Create" class="btn btn-success btn-lg  mb-1 w-100"/>
+                                    <input type="reset" value="Reset" class="btn btn-success btn-lg  mb-1 w-100"/>
 
-                                    <input type="submit" name="action" value="Create" class="btn btn-success btn-lg mb-1"/>
-                                    <input type="reset" value="Reset" class="btn btn-success btn-lg mb-1"/>
 
-                                    <%= error%>
+                                    ${requestScope.ERROR}
                                 </form>
 
                             </div>

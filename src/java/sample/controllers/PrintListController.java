@@ -3,61 +3,58 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sample.servlets;
+package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sample.user.UserDAO;
-import sample.user.UserDTO;
+import sample.shopping.Tea;
+import sample.shopping.TeaDAO;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "PrintListController", urlPatterns = {"/PrintListController"})
+public class PrintListController extends HttpServlet {
 
-    private static final String AD = "AD";
-    private static final String US = "US";
-    private static final String ADMIN_PAGE = "admin.jsp";
-    private static final String US_PAGE = "usPage.jsp";
-    private static final String LOGIN_PAGE = "login.jsp";
-
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = LOGIN_PAGE;
+        
+        String url = "viewCart.jsp";
+        
         try {
-            String userID = request.getParameter("userID");
-            String password = request.getParameter("password");
-            UserDAO dao = new UserDAO();
-            UserDTO loginUser = dao.checkLogin(userID,password);
-            if(loginUser == null){
-                request.setAttribute("ERROR", "Incorrect UserID or password!");
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("LOGIN_USER",loginUser);
-                String roleID = loginUser.getRoleID();
-                if(AD.equals(roleID)){
-                    url = ADMIN_PAGE;
-                } else if (US.equals(roleID)){
-                    url = US_PAGE;
-                } else {
-                    request.setAttribute("ERROR", "Your role is not supported yet");
-                }
-            }
+
+            
+            TeaDAO dao = new TeaDAO();
+            List<Tea> list = dao.getAllTeas();
+            request.setAttribute("TEA", list);
+            
         } catch (Exception e) {
-            log("Error at LoginController" + e.toString());
+            log("Error at :" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+        
         
     }
 
@@ -73,7 +70,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+      
     }
 
     /**
