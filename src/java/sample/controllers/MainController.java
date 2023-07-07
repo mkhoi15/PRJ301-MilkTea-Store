@@ -37,7 +37,7 @@ public class MainController extends HttpServlet {
     private static final String CREATE_CONTROLLER = "CreateController";
     
     private static final String SHOPPING_PAGE = "ShoppingPage";
-    private static final String SHOPPING_PAGE_VIEW = "shopping.html";
+    private static final String SHOPPING_CONTROLLER = "HomeController";
     private static final String ADD = "Add";
     private static final String ADD_CONTROLLER = "AddController";
 
@@ -55,7 +55,10 @@ public class MainController extends HttpServlet {
     
     private static final String LOGIN_WITH_GOOGLE = "LoginWithGoogle";
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
-
+    
+    private static final String CHECK_OUT = "CheckOut";
+    private static final String CHECK_OUT_CONTROLLER = "CheckOutController";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -77,7 +80,7 @@ public class MainController extends HttpServlet {
             } else if (CREATE.equals(action)) {
                 url = CREATE_CONTROLLER;
             } else if (SHOPPING_PAGE.equals(action)) {
-                url = SHOPPING_PAGE_VIEW;
+                url = SHOPPING_CONTROLLER;
             } else if (ADD.equals(action)) {
                 url = ADD_CONTROLLER;
             } else if (VIEW.equals(action)) {
@@ -90,7 +93,9 @@ public class MainController extends HttpServlet {
                 url = LOGOUT_CONTROLLER;
             } else if (LOGIN_WITH_GOOGLE.equals(action)){
                 url = LOGIN_WITH_GOOGLE_CONTROLLER;
-            }        
+            } else if (CHECK_OUT.equals(action)){
+                url = CHECK_OUT_CONTROLLER;
+            }    
         } catch (Exception e) {
             log("Error at MainController:" + e.toString());
         } finally {

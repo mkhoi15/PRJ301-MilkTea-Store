@@ -67,4 +67,14 @@ public class Cart {
         }
         return check;
     }
+     
+       public double getTotal() {
+        double total = 0;
+        for (Map.Entry<String, Tea> c : this.cart.entrySet()) {
+            Tea tea = c.getValue();
+            total += tea.getQuantity() * tea.getPrice();
+        }
+        return total;
+    }
+  
 }

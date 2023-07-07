@@ -11,24 +11,27 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Create User</title>
+        <!--===============================================================================================-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <!--===============================================================================================-->
         <link rel="stylesheet" href="./assets/fonts/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
     </head>
-    
+
     <style>
-    @media (min-width: 1025px) {
+        @media (min-width: 1025px) {
 
-        body {
-            background: linear-gradient(178.6deg, rgb(20, 36, 50) 11.8%, rgb(124, 143, 161) 83.8%);
-    }
-        .roleID{
-            display: flex;
+            body {
+                background: linear-gradient(178.6deg, rgb(20, 36, 50) 11.8%, rgb(124, 143, 161) 83.8%);
+            }
+            .roleID{
+                display: flex;
+            }
         }
-    }
 
-    
-</style>
+
+    </style>
     <body>
 
 
@@ -45,65 +48,65 @@
                                 <form class="px-md-2" action="MainController" method="POST">
 
                                     <div class="mb-4">
-                                        
+
                                         <div class="form-outline">
                                             <input type="text" id="formUserID" class="form-control" placeholder="User ID" name="userID" required=""/>
-                                             <h5 style="color: red">  ${requestScope.USER_ERROR.userIDError}  <h5>
-                                            <label class="form-label" for="formUserID"></label>
-                                        </div>
-                                        
-                                    </div>
+                                            <h5 style="color: red">  ${requestScope.USER_ERROR.userIDError}  <h5>
+                                                    <label class="form-label" for="formUserID"></label>
+                                                    </div>
+
+                                                    </div>
 
 
 
-                                    <div class=" mb-4">
+                                                    <div class=" mb-4">
 
-                                        <div class="form-outline ">
-                                            <input type="text" class="form-control" id="formName" placeholder="Full Name" name="fullName" required=""/>
-                                            <label for="formName" class="form-label"></label>
-                                            <h5 style="color: red">  ${requestScope.USER_ERROR.fullNameError} <h5>    
-                                        </div>
+                                                        <div class="form-outline ">
+                                                            <input type="text" class="form-control" id="formName" placeholder="Full Name" name="fullName" required=""/>
+                                                            <label for="formName" class="form-label"></label>
+                                                            <h5 style="color: red">  ${requestScope.USER_ERROR.fullNameError} <h5>    
+                                                                    </div>
 
-                                    </div>
-
-
-
-                                    <div class=" mb-4">
-
-                                        <div class="form-outline ">
-                                            <input type="text" name="roleID" value="US" readonly="" class="form-control" id="formName"/>
-                                            <label for="formName" class="form-label"></label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-outline mb-4">
-                                        <input type="password" id="formPassword" class="form-control" placeholder="Password" name="password" required=""/>
-                                        <label class="form-label" for="formPassword"></label>
-                                    </div>
-
-                                    <div class="form-outline mb-4">
-                                        <input type="password" id="formConfirm" class="form-control" placeholder="Confirm" name="confirm" required=""/>
-                                        <label class="form-label" for="formConfirm"></label>
-                                        <h5 style="color: red"> ${requestScope.USER_ERROR.confirmError}<h5>
-                                    </div>
+                                                                    </div>
 
 
-                                    
-                                    <input type="submit" name="action" value="Create" class="btn btn-success btn-lg  mb-1 w-100"/>
-                                    <input type="reset" value="Reset" class="btn btn-success btn-lg  mb-1 w-100"/>
+
+                                                                    <div class=" mb-4">
+
+                                                                        <div class="form-outline ">
+                                                                            <input type="text" name="roleID" value="US" readonly="" class="form-control" id="formName"/>
+                                                                            <label for="formName" class="form-label"></label>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="form-outline mb-4">
+                                                                        <input type="password" id="formPassword" class="form-control" placeholder="Password" name="password" required=""/>
+                                                                        <label class="form-label" for="formPassword"></label>
+                                                                    </div>
+
+                                                                    <div class="form-outline mb-4">
+                                                                        <input type="password" id="formConfirm" class="form-control" placeholder="Confirm" name="confirm" required=""/>
+                                                                        <label class="form-label" for="formConfirm"></label>
+                                                                        <h5 style="color: red"> ${requestScope.USER_ERROR.confirmError}<h5>
+                                                                                </div>
 
 
-                                    ${requestScope.ERROR}
-                                </form>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                                                                                <input type="submit" name="action" value="Create" class="btn btn-success btn-lg  mb-1 w-100"/>
+                                                                                <input type="reset" value="Reset" class="btn btn-success btn-lg  mb-1 w-100"/>
 
 
-    </body>
-</html>
+                                                                                ${requestScope.ERROR}
+                                                                                </form>
+
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                                </section>
+
+
+                                                                                </body>
+                                                                                </html>

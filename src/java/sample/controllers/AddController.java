@@ -16,44 +16,47 @@ import javax.servlet.http.HttpSession;
 import sample.shopping.Cart;
 import sample.shopping.Tea;
 
-
 @WebServlet(name = "AddController", urlPatterns = {"/AddController"})
 public class AddController extends HttpServlet {
 
-    
-    private static final String ERROR = "shopping.jsp";
-    private static final String SUCCESS = "shopping.jsp";
-    
+    private static final String ERROR = "HomeController";
+    private static final String SUCCESS = "HomeController";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
+
         String url = ERROR;
         try {
-            String strTea = request.getParameter("cmbTea");
-            String [] tmp = strTea.split("-");
-            String id = tmp[0];
-            String name = tmp[1];
-            double price = Double.parseDouble(tmp[2]);
-            int quantity = Integer.parseInt(request.getParameter("cmbQuantity"));
+            int page = 1;
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            String id = request.getParameter("id");
+            String name = request.getParameter("name");
+            double price = Double.parseDouble(request.getParameter("price"));
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            String imgPath = request.getParameter("imgPath");
             HttpSession session = request.getSession();
             Cart cart = (Cart) session.getAttribute("CART");
-            if(cart == null ){
+            if (cart == null) {
                 cart = new Cart();
             }
-            Tea tea = new Tea(id, name, price, quantity,"","",0);
+            Tea tea = new Tea(id, name, price, quantity, imgPath);
             boolean check = cart.add(tea);
             if (check) {
                 session.setAttribute("CART", cart);
-                request.setAttribute("MESSAGE", "Added: "+name+" - "+quantity+ " Sucess!");
+                session.setAttribute("SIZE", cart.getCart().size());
+                request.setAttribute("MESSAGE", "Added: " + name + " - " + quantity + " Sucess!");
+                request.setAttribute("CURRENT_PAGE", page);
             }
             url = SUCCESS;
         } catch (Exception e) {
-            log("Error at AddController: "+e.toString());
+            log("Error at AddController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

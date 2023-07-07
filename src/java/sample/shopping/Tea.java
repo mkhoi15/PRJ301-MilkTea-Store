@@ -8,21 +8,16 @@ public class Tea {
     private double price;
     private int quantity;
     private String imgPath;
-    private String description;
-    private int cateId;
-    
 
     public Tea() {
     }
 
-    public Tea(String id, String name, double price, int quantity, String imgPath, String description, int cateId) {
+    public Tea(String id, String name, double price, int quantity, String imgPath) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.imgPath = imgPath;
-        this.description = description;
-        this.cateId = cateId;
     }
 
     public String getId() {
@@ -65,27 +60,10 @@ public class Tea {
         this.imgPath = imgPath;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getCateId() {
-        return cateId;
-    }
-
-    public void setCateId(int cateId) {
-        this.cateId = cateId;
-    }
-
     @Override
     public String toString() {
-        return "Tea{" + "id=" + id + ", name=" + name + ", price=" + price + ", quantity=" + quantity + ", imgPath=" + imgPath + ", description=" + description + ", cateId=" + cateId + '}';
+        return "Tea{" + "id=" + id + ", name=" + name + ", price=" + price + ", quantity=" + quantity + ", imgPath=" + imgPath + '}';
     }
-
-    
+     
     
 }

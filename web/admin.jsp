@@ -12,18 +12,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ADMIn Page</title>      
+        <title>ADMIN Page</title>      
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <!--===============================================================================================-->
         <link rel="stylesheet" href="./assets/fonts/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+        <!--===============================================================================================-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!--===============================================================================================-->
         <link rel="stylesheet" href="./assets/css/table.css">
+        <!--===============================================================================================-->
     </head>
     <body>
         <!--Phân quyền-->
-        <c:if test="${sessionScope.LOGIN_USER == null || sessionScope.LOGIN_USER.roleID ne 'AD'}">
-            <c:redirect url="login.html"></c:redirect>
-        </c:if>
+
 
         <!--Log out-->
         <c:url var="logoutLink" value="MainController" >
@@ -61,7 +64,9 @@
                             <div class="col-sm-6">
                                 <h2>Manage <b>Users</b></h2>
                             </div>
-
+                            <div class="col-sm-6">
+                                <h2 class="text-warning d-flex justify-content-center">${requestScope.ERROR}</h2>
+                            </div>
                         </div>
                     </div>
                     <c:if test="${requestScope.LIST_USER != null}">
@@ -117,6 +122,6 @@
                             </table>
                         </c:if>
                     </c:if>   
-                    ${requestScope.ERROR}
+                   
                     </body>
                     </html>
